@@ -18,7 +18,7 @@ fun personTextField(fieldLabel: String): String {
         value = text,
         onValueChange = {
             if (it.length <= 20) text = it
-            nameTextField = it
+            text = it
         },
         label = { Text(fieldLabel) },
         modifier = Modifier.fillMaxWidth(),

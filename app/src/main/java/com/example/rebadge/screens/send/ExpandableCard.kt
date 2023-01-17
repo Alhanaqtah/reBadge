@@ -69,10 +69,10 @@ fun ExpandableCard() {
         }
 
         if (expandedState) {
-            BtInfoCard(deviceName = "Device", info = "connected")
-            BtInfoCard(deviceName = "Device", info = "connected")
-            BtInfoCard(deviceName = "Device", info = "connected")
-            BtInfoCard(deviceName = "Device", info = "connected")
+//            BtInfoCard(deviceName = "Device", info = "connected")
+//            BtInfoCard(deviceName = "Device", info = "connected")
+//            BtInfoCard(deviceName = "Device", info = "connected")
+//            BtInfoCard(deviceName = "Device", info = "connected")
         }
     }
 }
