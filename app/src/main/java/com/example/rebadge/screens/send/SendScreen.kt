@@ -1,5 +1,3 @@
-@file:Suppress("OPT_IN_IS_NOT_ENABLED")
-
 package com.example.rebadge.screens.send
 
 import androidx.compose.foundation.layout.*
@@ -41,11 +39,16 @@ fun SendScreen() {
         Box(
             modifier = Modifier.weight(2f)
         ) {
+            // Отправляет запрос на включения bluetooth
+            //activity.enableBluetooth(btAdapter)
+
             ExpandableCard()
         }
 
         Button(
-            onClick = {},
+            onClick = {
+
+            },
             modifier = Modifier
                 //.weight(0.25f)
                 .width(150.dp)

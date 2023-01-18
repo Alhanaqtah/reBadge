@@ -1,5 +1,8 @@
 package com.example.rebadge.screens.send
 
+import android.annotation.SuppressLint
+import android.bluetooth.BluetoothDevice
+import android.util.Log
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.tween
@@ -16,7 +19,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.rebadge.R
+import com.example.rebadge.btAdapter
 
+@SuppressLint("MissingPermission")
 @Composable
 fun ExpandableCard() {
     var expandedState by remember {
@@ -33,7 +38,7 @@ fun ExpandableCard() {
                 )
             ),
         onClick = {
-            expandedState = !expandedState 
+            expandedState = !expandedState
         }
     ) {
         Row(
@@ -59,8 +64,9 @@ fun ExpandableCard() {
             IconButton(
                 modifier = Modifier.weight(1f),
                 onClick = {
-                expandedState = !expandedState
-            }) {
+                    expandedState = !expandedState
+                }
+            ) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_baseline_track_changes_24),
                     contentDescription = "Find available bluetooth devices"
@@ -68,11 +74,14 @@ fun ExpandableCard() {
             }
         }
 
+        var device: Set<BluetoothDevice> = btAdapter.bondedDevices
+        for (d in device)
+            Log.d("Log", d.address.toString())
         if (expandedState) {
-//            BtInfoCard(deviceName = "Device", info = "connected")
-//            BtInfoCard(deviceName = "Device", info = "connected")
-//            BtInfoCard(deviceName = "Device", info = "connected")
-//            BtInfoCard(deviceName = "Device", info = "connected")
+            BtDeviceInfoCard(deviceName = "Device", info = "connected")
+            BtDeviceInfoCard(deviceName = "Device", info = "connected")
+            BtDeviceInfoCard(deviceName = "Device", info = "connected")
+            BtDeviceInfoCard(deviceName = "Device", info = "connected")
         }
     }
 }
