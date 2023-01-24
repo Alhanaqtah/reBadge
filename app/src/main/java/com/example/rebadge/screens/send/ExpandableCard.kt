@@ -1,15 +1,11 @@
 package com.example.rebadge.screens.send
 
 import android.annotation.SuppressLint
-import android.bluetooth.BluetoothDevice
-import android.util.Log
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -39,6 +35,7 @@ fun ExpandableCard() {
             ),
         onClick = {
             expandedState = !expandedState
+            if (!btAdapter.isEnabled) btAdapter.enable()
         }
     ) {
         Row(
@@ -74,14 +71,14 @@ fun ExpandableCard() {
             }
         }
 
-        var device: Set<BluetoothDevice> = btAdapter.bondedDevices
-        for (d in device)
-            Log.d("Log", d.address.toString())
         if (expandedState) {
-            BtDeviceInfoCard(deviceName = "Device", info = "connected")
-            BtDeviceInfoCard(deviceName = "Device", info = "connected")
-            BtDeviceInfoCard(deviceName = "Device", info = "connected")
-            BtDeviceInfoCard(deviceName = "Device", info = "connected")
+            LazyColumn(
+                modifier = Modifier.fillMaxSize()
+            ) {
+                items(count = 10) {
+                    BtDeviceInfoCard(deviceName = "DeviceName", info = "Info")
+                }
+            }
         }
     }
 }

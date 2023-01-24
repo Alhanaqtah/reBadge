@@ -39,9 +39,6 @@ fun SendScreen() {
         Box(
             modifier = Modifier.weight(2f)
         ) {
-            // Отправляет запрос на включения bluetooth
-            //activity.enableBluetooth(btAdapter)
-
             ExpandableCard()
         }
 
