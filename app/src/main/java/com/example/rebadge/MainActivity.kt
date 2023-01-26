@@ -10,12 +10,10 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -26,66 +24,18 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.rebadge.navigation.SetUpNavGraph
 import com.example.rebadge.ui.theme.ReBadgeTheme
+import java.util.*
 
 lateinit var btAdapter: BluetoothAdapter
+var devices: MutableList<String> = LinkedList<String>()
+var macs: MutableList<String> = LinkedList<String>()
 
 class MainActivity : ComponentActivity() {
-    @RequiresApi(Build.VERSION_CODES.S)
+    @SuppressLint("MissingPermission")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (ContextCompat.checkSelfPermission(
-                baseContext,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-        ) == PackageManager.PERMISSION_DENIED) {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
-                1
-            )
-        } else {
-            Log.d("BluetoothReceiver", "PERMISSION GRANTED")
-        }
-
-        if (ContextCompat.checkSelfPermission(
-                baseContext,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_DENIED) {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                1
-            )
-        } else {
-            Log.d("BluetoothReceiver", "PERMISSION GRANTED")
-        }
-
-        if (ContextCompat.checkSelfPermission(
-                baseContext,
-                Manifest.permission.BLUETOOTH_CONNECT
-            ) == PackageManager.PERMISSION_DENIED) {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.BLUETOOTH_CONNECT),
-                1
-            )
-        } else {
-            Log.d("BluetoothReceiver", "PERMISSION GRANTED")
-        }
-
-        if (ContextCompat.checkSelfPermission(
-                baseContext,
-                Manifest.permission.BLUETOOTH_SCAN
-            ) == PackageManager.PERMISSION_DENIED) {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.BLUETOOTH_SCAN),
-                1
-            )
-        } else {
-            Log.d("BluetoothReceiver", "PERMISSION GRANTED")
-        }
-        
+        turnOnNecessaryPermissions()
         registerReceiver(btDeviceDiscoveryReceiver, btFilter())
 
         lateinit var navController: NavController
@@ -125,6 +75,8 @@ class MainActivity : ComponentActivity() {
                 BluetoothDevice.ACTION_FOUND ->{
                     val device = intent.getParcelableExtra<BluetoothDevice>(BluetoothDevice.EXTRA_DEVICE)
                     Log.d("BluetoothReceiver" ,"${device?.name}  ${device?.address}")
+                    devices.add(device?.name.toString())
+                    macs.add(device?.address.toString())
                 }
                 BluetoothAdapter.ACTION_DISCOVERY_FINISHED -> {
                     Log.d("BluetoothReceiver","Discovery Finished")
@@ -138,16 +90,57 @@ class MainActivity : ComponentActivity() {
         return btManager.adapter
     }
 
-    fun enableBluetooth(btAdapter: BluetoothAdapter) {
-        if (!btAdapter.isEnabled) {
-            val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
-            if (ActivityCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.BLUETOOTH_CONNECT
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                startActivityForResult(enableBtIntent, 1)
-            }
+    private fun turnOnNecessaryPermissions() {
+        if (ContextCompat.checkSelfPermission(
+                baseContext,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) == PackageManager.PERMISSION_DENIED) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
+                1
+            )
+        } else {
+            Log.d("NecessaryPermissions", "PERMISSION GRANTED")
+        }
+
+        if (ContextCompat.checkSelfPermission(
+                baseContext,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_DENIED) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                1
+            )
+        } else {
+            Log.d("NecessaryPermissions", "ACCESS_FINE_LOCATION GRANTED")
+        }
+
+        if (ContextCompat.checkSelfPermission(
+                baseContext,
+                Manifest.permission.BLUETOOTH_CONNECT
+            ) == PackageManager.PERMISSION_DENIED) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.BLUETOOTH_CONNECT),
+                1
+            )
+        } else {
+            Log.d("NecessaryPermissions", "BLUETOOTH_CONNECT GRANTED")
+        }
+
+        if (ContextCompat.checkSelfPermission(
+                baseContext,
+                Manifest.permission.BLUETOOTH_SCAN
+            ) == PackageManager.PERMISSION_DENIED) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.BLUETOOTH_SCAN),
+                1
+            )
+        } else {
+            Log.d("NecessaryPermissions", "BLUETOOTH_SCAN GRANTED")
         }
     }
 

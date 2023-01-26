@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -18,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import com.example.rebadge.R
 
 @Composable
-fun BtDeviceInfoCard(deviceName: String, info: String) {
+fun BtDeviceCard(deviceName: String, info: String) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.clickable {  }
@@ -34,10 +33,10 @@ fun BtDeviceInfoCard(deviceName: String, info: String) {
                 overflow = TextOverflow.Ellipsis,
                 text = deviceName,
             )
-            Text(
-                fontSize = MaterialTheme.typography.bodySmall.fontSize,
-                text = info,
-            )
+//            Text(
+//                fontSize = MaterialTheme.typography.bodySmall.fontSize,
+//                text = info,
+//            )
         }
 
         IconButton(
@@ -55,5 +54,5 @@ fun BtDeviceInfoCard(deviceName: String, info: String) {
 @Preview(showBackground = true)
 @Composable
 fun BtDeviceInfoCardPreview() {
-    BtDeviceInfoCard(deviceName = "Device", info = "Info")
+    BtDeviceCard(deviceName = "Device", info = "Info")
 }

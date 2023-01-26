@@ -37,17 +37,15 @@ fun SendScreen() {
         }
 
         Box(
-            modifier = Modifier.weight(2f)
+            modifier = Modifier
+                .weight(2f)
         ) {
             ExpandableCard()
         }
 
         Button(
-            onClick = {
-
-            },
+            onClick = {},
             modifier = Modifier
-                //.weight(0.25f)
                 .width(150.dp)
         ) {
             Text("SEND")

@@ -6,6 +6,7 @@ import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -16,6 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.rebadge.R
 import com.example.rebadge.btAdapter
+import com.example.rebadge.devices
 
 @SuppressLint("MissingPermission")
 @Composable
@@ -71,12 +73,12 @@ fun ExpandableCard() {
             }
         }
 
-        if (expandedState) {
+        if (expandedState && devices.isNotEmpty()) {
             LazyColumn(
                 modifier = Modifier.fillMaxSize()
             ) {
-                items(count = 10) {
-                    BtDeviceInfoCard(deviceName = "DeviceName", info = "Info")
+                itemsIndexed(devices as List<String>) { _, item ->
+                    BtDeviceCard(deviceName = item, info = "")
                 }
             }
         }
