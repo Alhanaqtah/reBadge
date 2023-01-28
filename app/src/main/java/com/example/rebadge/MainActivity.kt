@@ -27,8 +27,7 @@ import com.example.rebadge.ui.theme.ReBadgeTheme
 import java.util.*
 
 lateinit var btAdapter: BluetoothAdapter
-var devices: MutableList<String> = LinkedList<String>()
-var macs: MutableList<String> = LinkedList<String>()
+var devices: MutableList<BluetoothDevice> = LinkedList<BluetoothDevice>()
 
 class MainActivity : ComponentActivity() {
     @SuppressLint("MissingPermission")
@@ -75,8 +74,7 @@ class MainActivity : ComponentActivity() {
                 BluetoothDevice.ACTION_FOUND ->{
                     val device = intent.getParcelableExtra<BluetoothDevice>(BluetoothDevice.EXTRA_DEVICE)
                     Log.d("BluetoothReceiver" ,"${device?.name}  ${device?.address}")
-                    devices.add(device?.name.toString())
-                    macs.add(device?.address.toString())
+                    if (device != null) { devices.add(device) }
                 }
                 BluetoothAdapter.ACTION_DISCOVERY_FINISHED -> {
                     Log.d("BluetoothReceiver","Discovery Finished")

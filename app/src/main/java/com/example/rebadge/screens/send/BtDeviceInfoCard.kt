@@ -1,5 +1,7 @@
 package com.example.rebadge.screens.send
 
+import android.annotation.SuppressLint
+import android.bluetooth.BluetoothDevice
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,12 +17,16 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.rebadge.R
+import com.example.rebadge.devices
 
+@SuppressLint("MissingPermission")
 @Composable
-fun BtDeviceCard(deviceName: String, info: String) {
+fun BtDeviceCard(device: BluetoothDevice) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.clickable {  }
+        modifier = Modifier.clickable {
+            client = BluetoothClient(device)
+        }
     ) {
         // Информация об устройстве
         Column(
@@ -28,11 +34,13 @@ fun BtDeviceCard(deviceName: String, info: String) {
                 .weight(6f)
                 .padding(10.dp, 0.dp)
         ) {
-            Text(
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                text = deviceName,
-            )
+            device.name?.toString()?.let {
+                Text(
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    text = it,
+                )
+            }
 //            Text(
 //                fontSize = MaterialTheme.typography.bodySmall.fontSize,
 //                text = info,
@@ -54,5 +62,5 @@ fun BtDeviceCard(deviceName: String, info: String) {
 @Preview(showBackground = true)
 @Composable
 fun BtDeviceInfoCardPreview() {
-    BtDeviceCard(deviceName = "Device", info = "Info")
+    BtDeviceCard(devices.get(0))
 }

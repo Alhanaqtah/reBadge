@@ -77,8 +77,8 @@ fun ExpandableCard() {
             LazyColumn(
                 modifier = Modifier.fillMaxSize()
             ) {
-                itemsIndexed(devices as List<String>) { _, item ->
-                    BtDeviceCard(deviceName = item, info = "")
+                itemsIndexed(devices) { _, item ->
+                    BtDeviceCard(device = item)
                 }
             }
         }

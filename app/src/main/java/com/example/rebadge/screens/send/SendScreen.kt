@@ -9,6 +9,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
+lateinit var client: BluetoothClient
+
 @Composable
 fun SendScreen() {
     var name       by remember { mutableStateOf("") }
@@ -44,7 +46,14 @@ fun SendScreen() {
         }
 
         Button(
-            onClick = {},
+            onClick = {
+                      client.connect(
+                          name + "#" +
+                                  surname + "#" +
+                                  patronymic + "#" +
+                                  position
+                      )
+            },
             modifier = Modifier
                 .width(150.dp)
         ) {
