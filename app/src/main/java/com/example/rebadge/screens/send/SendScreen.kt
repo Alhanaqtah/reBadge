@@ -47,12 +47,12 @@ fun SendScreen() {
 
         Button(
             onClick = {
-                      client.connect(
-                          name + "#" +
-                                  surname + "#" +
-                                  patronymic + "#" +
-                                  position
-                      )
+                val message: String = "${name}#${surname}#${patronymic}#${position}"
+                    .replace('ё', 'е')
+                    .replace('Ё', 'Е')
+                client.connect(
+                    message
+                )
             },
             modifier = Modifier
                 .width(150.dp)

@@ -74,6 +74,8 @@ fun ExpandableCard() {
         }
 
         if (expandedState && devices.isNotEmpty()) {
+            devices.distinctBy {it.name}
+            devices.distinctBy {it.name == null}
             LazyColumn(
                 modifier = Modifier.fillMaxSize()
             ) {
